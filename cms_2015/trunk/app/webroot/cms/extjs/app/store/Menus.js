@@ -22,18 +22,18 @@ Ext.define('CMS.store.Menus', {
         }]
     },
 
-    ////数据传递
-    //proxy: {
-    //    type: 'ajax',
-    //    api: {
-    //        read: '/welcome/getMenus?ext=1'
-    //    },
-    //    reader: {
-    //        type: 'json',
-    //        root: 'data',
-    //        successProperty: 'success'
-    //    }
-    //},
+    //数据传递
+    proxy: {
+        type: 'ajax',
+        api: {
+            read: '/Menus/row'
+        },
+        reader: {
+            type: 'json',
+            root: 'data',
+            successProperty: 'success'
+        }
+    },
 
     //字段
     fields: [{

@@ -16,5 +16,8 @@ Ext.define('CMS.model.Menu', {
     }, {
         name: 'url',
         type: 'string'
+    }, {
+        name: 'pid',
+        type: 'int'
     }]
 });

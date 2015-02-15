@@ -32,17 +32,21 @@ Ext.define('CMS.controller.Welcome', {
         var arr = location.href.split('#!/');
         var me = this;
         var title = decodeURI(arr[1]);
-        if (title) {
-            Ext.Ajax.request({
-                params: {
-                    'text': title
-                },
-                url: '/Menus/getUrl',
-                success: function(response) {
-                    var json = Ext.JSON.decode(response.responseText);
-                    me.portPanel(json.url, title, Ext.getCmp('main'));
-                }
-            })
+        if (title == '菜单管理') {
+            me.portPanel('/system/menu/lists', title, Ext.getCmp('main'));
+        } else {
+            if (title) {
+                Ext.Ajax.request({
+                    params: {
+                        'text': title
+                    },
+                    url: '/Menus/getUrl',
+                    success: function(response) {
+                        var json = Ext.JSON.decode(response.responseText);
+                        me.portPanel(json.url, title, Ext.getCmp('main'));
+                    }
+                })
+            }
         }
     },
 

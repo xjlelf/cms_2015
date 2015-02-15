@@ -39,7 +39,12 @@ Ext.define('CMS.view.system.menu.Edit', {
         }, {
             xtype: 'textfield',
             name: 'url',
-            fieldLabel: '链接地址',
+            fieldLabel: '链接地址'
+        }, {
+            xtype: 'textfield',
+            name: 'pid',
+            fieldLabel: '父类id',
+            value: 0,
             allowBlank: false
         }],
 
