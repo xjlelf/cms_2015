@@ -1,0 +1,1 @@
+<?php echo $this->js->object($data);?>
