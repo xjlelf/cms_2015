@@ -44,10 +44,17 @@ class AppController extends Controller {
     /** 默认结果 */
     public $result = array();
 
+    /** 默认模型 */
+    public $model_name = null;
+
     /**
      * 控制器执行前执行
      */
     public function beforeFilter() {
+        if (empty($this->model_name)) {
+            $model_name = $this->modelClass;
+        }
+        $this->model = $this->$model_name;
         // 验证管理员的登录情况
         $this->__authAdmin();
         if ($this->Auth->user()) {
@@ -91,5 +98,32 @@ class AppController extends Controller {
         // 取消登录成功之后自动跳转
         $this->Auth->autoRedirect  = false;
         $this->Auth->logoutRedirect= array('controller' => 'Welcome', 'action' => 'login');
+    }
+
+    /**
+     * 公用列表方法
+     */
+    public function lists() {
+        $this->result = $this->model->findAll();
+    }
+
+    /**
+     * 公用保存方法
+     */
+    public function save() {
+        $this->model->set($this->data);
+        $update_flag = $this->model->save();
+        $this->result['success'] = $update_flag;
+    }
+
+    /**
+     * 公用删除方法
+     */
+    public function delete($id) {
+        $delete_flag = false;
+        if (!empty($id)) {
+            $delete_flag = $this->model->delete($id);
+        }
+        $this->result['success'] = $delete_flag;
     }
 }

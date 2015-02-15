@@ -30,4 +30,21 @@ App::uses('Model', 'Model');
  * @package       app.Model
  */
 class AppModel extends Model {
+
+    /**
+     * 查询多个数据
+     * @param array $applications
+     *
+     * @return array
+     */
+    public function findAll($applications = array()) {
+        $data = $this->find('all', $applications);
+        $result = array();
+        foreach ($data as $k => $val) {
+            foreach ($val as $v) {
+                $result[$k] = $v;
+            }
+        }
+        return $result;
+    }
 }
