@@ -42,9 +42,27 @@ class AppModel extends Model {
         $result = array();
         foreach ($data as $k => $val) {
             foreach ($val as $v) {
-                $result[$k] = $v;
+                $result['data'][$k] = $v;
             }
         }
         return $result;
+    }
+
+    /**
+     * 模糊查询设置
+     *
+     * @param $value
+     * @param bool $left
+     * @param bool $right
+     * @return string
+     */
+    public function selectLike($value, $left = true, $right = true) {
+        if ($left) {
+            $value = '%' . $value;
+        }
+        if ($right) {
+            $value = $value . '%';
+        }
+        return $value;
     }
 }

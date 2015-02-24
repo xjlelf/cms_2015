@@ -52,7 +52,7 @@ class AppController extends Controller {
      */
     public function beforeFilter() {
         if (empty($this->model_name)) {
-            $model_name = $this->modelClass;
+            $this->model_name = $model_name = $this->modelClass;
         }
         $this->model = $this->$model_name;
         // 验证管理员的登录情况
@@ -104,7 +104,12 @@ class AppController extends Controller {
      * 公用列表方法
      */
     public function lists() {
-        $this->result = $this->model->findAll();
+        $application = $this->_getConditions($this->request->query);
+        if ($this->_setPage($application)) {
+            $this->result = $this->_forPaginate($application);
+        } else {
+            $this->result = $this->model->findAll($application);
+        }
     }
 
     /**
@@ -125,5 +130,54 @@ class AppController extends Controller {
             $delete_flag = $this->model->delete($id);
         }
         $this->result['success'] = $delete_flag;
+    }
+
+    /**
+     * 设置查询条件
+     * @param $query
+     */
+    protected  function _getConditions($query) {}
+
+    /**
+     * 设置分页
+     * @param $application
+     *
+     * @return bool
+     */
+    protected function _setPage(& $application) {
+        if (!empty($this->request->query['limit'])) {
+            $application['limit'] = $this->request->query['limit'];
+        }
+        if (!empty($this->request->query['page'])) {
+            $this->request->params['named']['page'] = $this->request->query['page'];
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 读取分页数据
+     *
+     * @param $options
+     * @param array $conditions
+     * @param string $model
+     * @return array
+     */
+    protected function _forPaginate($options, $conditions = array(), $model = null) {
+        if (empty($model)) {
+            $model = $this->model;
+        }
+        $this->Paginator->settings = $options;
+        $data = $this->Paginator->paginate($model, $conditions);
+        $result = array();
+        foreach ($data as $k => $val) {
+            foreach ($val as $v) {
+                $result['data'][$k] = $v;
+            }
+        }
+        if (isset($this->request['paging'][$this->model_name]['count'])) {
+            $result['total'] = $this->request['paging'][$this->model_name]['count'];
+        }
+        return $result;
     }
 }

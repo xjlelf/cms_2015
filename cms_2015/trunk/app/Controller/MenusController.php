@@ -35,23 +35,23 @@ class MenusController extends AppController {
             );
             $data = $this->Menu->findAll($application);
 
-            if (!empty($data)) {
-                foreach ($data as $k => $v) {
+            if (!empty($data['data'])) {
+                foreach ($data['data'] as $k => $v) {
                     if (!$this->Menu->hasChildren($v['id'])) {
-                        $data[$k]['leaf'] = 1;
+                        $data['data'][$k]['leaf'] = 1;
                     }
                 }
             }
             //默认菜单
             if ($this->request->query['node'] == 0) {
-                $data[] = array(
+                $data['data'][] = array(
                     'id' => -1,
                     'text' => '系统管理'
                 );
             }
             //默认子菜单
             if ($this->request->query['node'] == -1) {
-                $data[] = array(
+                $data['data'][] = array(
                     'id' => -2,
                     'text' => '菜单管理',
                     'url' => '/system/menu/lists',
