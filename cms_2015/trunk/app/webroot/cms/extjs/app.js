@@ -85,7 +85,7 @@ Ext.override(Ext.grid.GridPanel, {
             params: params,
             success : function(response) {
                 var json = Ext.JSON.decode(response.responseText);
-                store.loadData(json);
+                store.loadData(json.data);
             },
             method: 'get'
         });
