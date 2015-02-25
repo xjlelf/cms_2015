@@ -54,8 +54,8 @@ Ext.define('CMS.view.stock.Edit', {
             //调用数据
             store: Ext.create('CMS.store.StockDetail'),
             colspan: 3,
-            width: 1000,
-            height: 500,
+            width: Ext.getCmp('main').getWidth() - 10,
+            height: 450,
             title: '出入库明细'
         }],
 
