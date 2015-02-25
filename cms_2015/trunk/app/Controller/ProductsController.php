@@ -28,6 +28,11 @@ class ProductsController extends AppController {
                 'sku_sn LIKE' => $this->Product->selectLike($query['sku_sn'])
             );
         }
+        if (!empty($query['query'])) {
+            $conditions[] = array(
+                'sku_sn LIKE' => $this->Product->selectLike($query['query'])
+            );
+        }
         if (!empty($query['cate_1'])) {
             $conditions[] = array(
                 'cate_1' => $query['cate_1']
