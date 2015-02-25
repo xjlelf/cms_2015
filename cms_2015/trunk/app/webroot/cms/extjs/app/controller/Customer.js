@@ -25,8 +25,6 @@ Ext.define('CMS.controller.Customer', {
                     this.showEditDialog('customeredit', '客户新增');
                 },
                 edit: function(record) {
-                    this.getStore('category.Type1').load();
-                    this.getStore('category.Type2').load();
                     this.showEditDialog('customeredit', '客户修改', record);
                 },
                 delete: function(record) {
