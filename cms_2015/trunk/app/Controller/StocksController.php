@@ -68,7 +68,11 @@ class StocksController extends AppController {
             }
             if ($flag) {
                 //第三步，保存订单
-                $orderData['total_price'] = array_sum(array_column($detailData, 'amt'));
+                $orderData['total_price'] = 0;
+                foreach ($detailData as $v) {
+                    $orderData['total_price'] += $v['amt'];
+                }
+//                $orderData['total_price'] = array_sum(array_column($detailData, 'amt'));
                 $flag = $this->Stock->save($orderData, array('atomic' => false));
             }
         }
