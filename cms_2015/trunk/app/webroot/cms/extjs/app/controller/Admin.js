@@ -28,7 +28,7 @@ Ext.define('CMS.controller.Admin', {
                 var tabpanel = mainpanel.getComponent(itemId);
             } else {
                 var tabpanel = Ext.widget(panel, {
-                    itemId: panel,
+                    itemId: itemId,
                     title: title,
                     closable: true
                 });

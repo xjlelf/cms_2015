@@ -103,8 +103,8 @@ class AppController extends Controller {
     /**
      * 公用列表方法
      */
-    public function lists() {
-        $application = $this->_getConditions($this->request->query);
+    public function lists($application = array()) {
+        $application['conditions'] = $this->_getConditions($this->request->query);
         if ($this->_setPage($application)) {
             $this->result = $this->_forPaginate($application);
         } else {
@@ -170,9 +170,10 @@ class AppController extends Controller {
         $this->Paginator->settings = $options;
         $data = $this->Paginator->paginate($model, $conditions);
         $result = array();
-        foreach ($data as $k => $val) {
-            foreach ($val as $v) {
-                $result['data'][$k] = $v;
+        foreach ($data as $key => $val) {
+            $result['data'][$key] = array();
+            foreach ($val as $k => $v) {
+                $result['data'][$key] = array_merge($result['data'][$key], $v);
             }
         }
         if (isset($this->request['paging'][$this->model_name]['count'])) {

@@ -50,6 +50,7 @@ Ext.define('CMS.view.stock.Edit', {
             fieldLabel: '出入库时间',
             allowBlank: false
         }, {
+            itemId: 'detail',
             xtype: 'stockdetail',
             //调用数据
             store: Ext.create('CMS.store.StockDetail'),
@@ -57,6 +58,14 @@ Ext.define('CMS.view.stock.Edit', {
             width: Ext.getCmp('main').getWidth() - 10,
             height: 450,
             title: '出入库明细'
+        }, {
+            itemId: 'real_detail',
+            xtype: 'hidden',
+            name: 'detail'
+        }, {
+            itemId: 'type',
+            xtype: 'hidden',
+            name: 'type'
         }],
 
         buttons: [{
@@ -64,12 +73,17 @@ Ext.define('CMS.view.stock.Edit', {
             formBind: true,
             disabled: true,
             handler: function() {
-                this.up('window').fireEvent('save');
-            }
-        },{
-            text: '取消',
-            handler: function() {
-                this.up('window').close();
+                var form = this.up('panel'),
+                    grid = form.getComponent('detail'),
+                    store = grid.getStore();
+                var jsonData = Ext.encode(Ext.pluck(store.data.items, 'data'));
+                form.getComponent('real_detail').setValue(jsonData);
+                if (form.up('panel').itemId == 'stockin') {
+                    form.getComponent('type').setValue(1);
+                } else if (form.up('panel').itemId == 'stockout') {
+                    form.getComponent('type').setValue(2);
+                }
+                form.up('panel').fireEvent('save', form);
             }
         }]
     }]

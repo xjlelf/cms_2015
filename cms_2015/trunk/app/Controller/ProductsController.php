@@ -43,7 +43,6 @@ class ProductsController extends AppController {
                 'cate_2' => $query['cate_2']
             );
         }
-        $application['conditions'] = $conditions;
-        return $application;
+        return $conditions;
     }
 }

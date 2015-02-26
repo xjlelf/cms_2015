@@ -40,9 +40,10 @@ class AppModel extends Model {
     public function findAll($applications = array()) {
         $data = $this->find('all', $applications);
         $result = array();
-        foreach ($data as $k => $val) {
-            foreach ($val as $v) {
-                $result['data'][$k] = $v;
+        foreach ($data as $key => $val) {
+            $result['data'][$key] = array();
+            foreach ($val as $k => $v) {
+                $result['data'][$key] = array_merge($result['data'][$key], $v);
             }
         }
         return $result;

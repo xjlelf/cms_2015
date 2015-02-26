@@ -17,13 +17,13 @@ Ext.define('CMS.model.Stock', {
         name: 'stock_dt',
         type: 'string'
     }, {
-        name: 'customer_id',
+        name: 'customer',
         type: 'int'
     }, {
-        name: 'customer',
+        name: 'name',
         type: 'string'
     }, {
-        name: 'order_price',
+        name: 'total_price',
         type: 'float'
     }]
 });

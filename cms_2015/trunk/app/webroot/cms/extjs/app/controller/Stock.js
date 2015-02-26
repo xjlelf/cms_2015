@@ -10,14 +10,16 @@ Ext.define('CMS.controller.Stock', {
     stores: [
         'Stock',
         'Customer',
-        'Product'
+        'Product',
+        'ProductStock'
     ],
 
     //调用视图
     views: [
         'stock.Lists',
         'stock.Edit',
-        'stock.Detail'
+        'stock.Detail',
+        'stock.Stock_lists'
     ],
 
     //应用程序加载完成之后，Viewport创建之前触发
@@ -31,6 +33,22 @@ Ext.define('CMS.controller.Stock', {
             'stockdetail': {
                 setGoodsInfo: function(productList, list, selectedRecords) {
                     this.setGoodsInfo(productList, list, selectedRecords);
+                }
+            },
+            'stockedit': {
+                save: function(form) {
+                    var store = this.getStore('Stock'),
+                        url = store.proxy.api.save;
+                    this.formSubmit(form, url, function() {
+                        form.up('panel').close();
+                        Ext.Msg.show({
+                            title: '系统提示',
+                            msg: '保存成功',
+                            buttons: Ext.Msg.OK,
+                            icon: Ext.Msg.INFO
+                        });
+                        store.load();
+                    });
                 }
             }
         });
@@ -62,6 +80,7 @@ Ext.define('CMS.controller.Stock', {
                     selectedRecords[0].data.product_id = selectedRecords[0].data.id;
                     selectedRecords[0].data.price = selectedRecords[0].data.original_price;
                     selectedRecords[0].data.id = 0;
+                    selectedRecords[0].data.amt = record[0].data.numbers * selectedRecords[0].data.price;
                     record[0].set(selectedRecords[0].data);
                     me.fireEvent('select', me, selectedRecords);
                 } else {

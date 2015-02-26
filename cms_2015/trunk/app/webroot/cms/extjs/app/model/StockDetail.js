@@ -11,8 +11,8 @@ Ext.define('CMS.model.StockDetail', {
         name: 'id',
         type: 'int'
     }, {
-        name: 'order_id',
-        type: 'int'
+        name: 'order_sn',
+        type: 'string'
     }, {
         name: 'product_id',
         type: 'int'
@@ -20,13 +20,13 @@ Ext.define('CMS.model.StockDetail', {
         name: 'sku_sn',
         type: 'string'
     }, {
-        name: 'product_name',
+        name: 'goods_name',
         type: 'string'
     }, {
         name: 'price',
         type: 'float'
     }, {
-        name: 'number',
+        name: 'numbers',
         type: 'int'
     }, {
         name: 'amt',

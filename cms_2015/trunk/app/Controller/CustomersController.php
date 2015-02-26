@@ -19,7 +19,6 @@ class CustomersController extends AppController {
                 'name LIKE' => $this->Customer->selectLike($query['name'])
             );
         }
-        $application['conditions'] = $conditions;
-        return $application;
+        return $conditions;
     }
 }

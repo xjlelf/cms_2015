@@ -80,7 +80,7 @@ Ext.define('CMS.view.stock.Detail', {
             minValue: 0,
             onChange: function(price) {
                 var record = this.up('grid').getSelectionModel().getSelection();
-                record[0].data.amt = record[0].data.number * price;
+                record[0].data.amt = record[0].data.numbers * price;
             }
         },
         flex: 0.75,
@@ -91,14 +91,14 @@ Ext.define('CMS.view.stock.Detail', {
     }, {
         header: '商品数量',
         align: 'center',
-        dataIndex: 'number',
+        dataIndex: 'numbers',
         allowDecimals : false,//不允许输入小数
         editor: {
             xtype: 'numberfield',
             minValue: 0,
-            onChange: function(number) {
+            onChange: function(numbers) {
                 var record = this.up('grid').getSelectionModel().getSelection();
-                record[0].data.amt = record[0].data.price * number;
+                record[0].data.amt = record[0].data.price * numbers;
             }
         },
         flex: 0.5,

@@ -22,13 +22,16 @@ Ext.define('CMS.view.stock.Lists', {
         dataIndex: 'order_sn'
     }, {
         header: '客户名称',
-        dataIndex: 'customer'
+        dataIndex: 'name'
     }, {
         header: '出入库时间',
         dataIndex: 'stock_dt'
     }, {
         header: '订单总价',
-        dataIndex: 'order_price'
+        dataIndex: 'total_price',
+        renderer: function(value) {
+            return value.toFixed(2);
+        }
     }, {
         header: '操作',
         xtype: 'actioncolumn',

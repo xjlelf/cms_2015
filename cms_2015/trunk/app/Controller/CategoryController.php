@@ -14,7 +14,7 @@ class CategoryController extends AppController {
     /**
      * 列表
      */
-    public function lists() {
+    public function lists($application = array()) {
         if (isset($this->request->query['type'])) {
             $application = array(
                 'fields' => array(
@@ -27,7 +27,7 @@ class CategoryController extends AppController {
             );
             $this->result = $this->model->findAll($application);
         } else {
-            parent::lists();
+            parent::lists($application);
         }
     }
 }
