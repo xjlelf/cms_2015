@@ -12,6 +12,26 @@ Ext.define('CMS.view.stock.Edit', {
     //布局
     layout: 'fit',
 
+    //默认事件
+    initComponent: function() {
+        this.items[0].items[4] = Ext.create('CMS.view.stock.Detail', {
+            itemId: 'detail',
+            //调用数据
+            store: Ext.create('CMS.store.StockDetail'),
+            colspan: 3,
+            width: Ext.getCmp('main').getWidth() - 10,
+            height: 450,
+            title: '出入库明细',
+            //插件
+            plugins: [
+                Ext.create('Ext.grid.plugin.CellEditing', {
+                    clicksToEdit: 1
+                })
+            ]
+        });
+        this.callParent(arguments);
+    },
+
     //子项
     items: [{
         xtype: 'form',
@@ -70,6 +90,7 @@ Ext.define('CMS.view.stock.Edit', {
 
         buttons: [{
             text: '保存',
+            icon: ConstDefine.COMMON_ICONS_PATH + 'disk.png',
             formBind: true,
             disabled: true,
             handler: function() {

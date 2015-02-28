@@ -24,7 +24,7 @@ Ext.define('CMS.view.stock.Stock_lists', {
         header: '商品名称',
         dataIndex: 'goods_name'
     }, {
-        header: '商品规格',
+        header: '商品规格（kg/桶）',
         dataIndex: 'stand'
     }, {
         header: '即时库存',

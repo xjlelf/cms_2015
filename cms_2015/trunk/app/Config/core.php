@@ -384,3 +384,5 @@ Cache::config('_cake_model_', array(
 	'serialize' => ($engine === 'File'),
 	'duration' => $duration
 ));
+/** 引用全局函数文件 */
+require_once APP . 'Config' . DS . 'common.php';

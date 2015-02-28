@@ -28,6 +28,23 @@ Ext.define('CMS.controller.Stock', {
             'stocklists': {
                 create: function(title, type) {
                     this.showPanel('stockedit', title, Ext.getCmp('main'), type);
+                },
+                edit: function(record) {
+                    if (record.data.type == 1) {
+                        var title = '入库单 ' + record.data.order_sn,
+                            itemId = 'stockin' + record.data.order_sn;
+                    } else {
+                        var title = '出库单 ' + record.data.order_sn,
+                            itemId = 'stockout' + record.data.order_sn;
+                    }
+                    this.showPanel('stockedit', title, Ext.getCmp('main'), itemId);
+                    var form = Ext.getCmp('main').getComponent(itemId).down('form');
+                    this.getStore('Customer').load();
+                    this.getStore('Product').load();
+                    form.loadRecord(record);
+                    form.getComponent('detail').store.load({
+                        params: {'order_sn': record.data.order_sn}
+                    });
                 }
             },
             'stockdetail': {
@@ -79,8 +96,7 @@ Ext.define('CMS.controller.Stock', {
                 if (update_flag) {
                     selectedRecords[0].data.product_id = selectedRecords[0].data.id;
                     selectedRecords[0].data.price = selectedRecords[0].data.original_price;
-                    selectedRecords[0].data.id = 0;
-                    selectedRecords[0].data.amt = record[0].data.numbers * selectedRecords[0].data.price;
+                    selectedRecords[0].data.amt = record[0].data.numbers * selectedRecords[0].data.original_price;
                     record[0].set(selectedRecords[0].data);
                     me.fireEvent('select', me, selectedRecords);
                 } else {

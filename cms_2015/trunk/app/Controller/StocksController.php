@@ -23,6 +23,7 @@ class StocksController extends AppController {
                 'Stock.customer',
                 'Stock.total_price',
                 'Stock.stock_dt',
+                'Stock.type',
                 'Customer.name'
             )
         );
@@ -96,7 +97,7 @@ class StocksController extends AppController {
         if (empty($data)) {
             return $detailData;
         }
-        $oldDetailData = $this->ob2ar(json_decode($data['detail']));
+        $oldDetailData = ob2ar(json_decode($data['detail']));
         foreach ($oldDetailData as $k => $v) {
             if (!empty($v['product_id'])) {
                 $detailData[$k]['order_sn'] = $data['order_sn'];
@@ -111,20 +112,29 @@ class StocksController extends AppController {
     }
 
     /**
-     * 对象转成数组
-     * @param $obj
+     * 订单明细列表
      *
-     * @return array
+     * @param $order_sn
      */
-    public function ob2ar($obj) {
-        if(is_object($obj)) {
-            $obj = (array)$obj;
-            $obj = $this->ob2ar($obj);
-        } elseif(is_array($obj)) {
-            foreach($obj as $key => $value) {
-                $obj[$key] = $this->ob2ar($value);
-            }
+    public function detail_lists() {
+        $order_sn = $this->request->query('order_sn');
+        if (empty($order_sn)) {
+            $this->result['data'] = array();
         }
-        return $obj;
+        $application = array(
+            'fields' => array(
+                'StockDetail.product_id',
+                'StockDetail.price',
+                'StockDetail.numbers',
+                'StockDetail.amt',
+                'StockDetail.remark',
+                'Product.sku_sn',
+                'Product.goods_name'
+            ),
+            'conditions' => array(
+                'order_sn' => $order_sn
+            )
+        );
+        $this->result = $this->StockDetail->findAll($application);
     }
 }

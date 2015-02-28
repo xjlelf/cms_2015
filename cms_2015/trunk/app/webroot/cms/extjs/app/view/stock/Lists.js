@@ -21,6 +21,16 @@ Ext.define('CMS.view.stock.Lists', {
         header: '出入库单编号',
         dataIndex: 'order_sn'
     }, {
+        header: '类型',
+        dataIndex: 'type',
+        renderer: function(value) {
+            if (value == 1) {
+                return '入库单';
+            } else {
+                return '出库单';
+            }
+        }
+    }, {
         header: '客户名称',
         dataIndex: 'name'
     }, {
@@ -63,12 +73,12 @@ Ext.define('CMS.view.stock.Lists', {
             items: [{
                 text: '入库单',
                 handler: function() {
-                    this.up('grid').fireEvent('create', '入库单', 'stockin');
+                    this.up('grid').fireEvent('create', '入库单', 'stockstockin');
                 }
             }, {
                 text: '出库单',
                 handler: function() {
-                    this.up('grid').fireEvent('create', '出库单', 'stockout');
+                    this.up('grid').fireEvent('create', '出库单', 'stockstockout');
                 }
             }]
         }

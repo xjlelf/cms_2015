@@ -16,13 +16,6 @@ Ext.define('CMS.view.stock.Detail', {
         dock: 'bottom'
     }],
 
-    //插件
-    plugins: [
-        Ext.create('Ext.grid.plugin.CellEditing', {
-            clicksToEdit: 1
-        })
-    ],
-
     //默认事件
     initComponent: function() {
         this.gridReset();

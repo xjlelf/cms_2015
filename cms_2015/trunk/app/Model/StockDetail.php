@@ -7,4 +7,12 @@
  */
 
 class StockDetail extends AppModel {
+
+    /** 连表  */
+    public $belongsTo = array (
+        'Product' => array (
+            'className' => 'Product',
+            'foreignKey' => 'product_id'
+        )
+    );
 }

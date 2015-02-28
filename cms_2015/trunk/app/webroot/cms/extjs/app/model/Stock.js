@@ -25,5 +25,8 @@ Ext.define('CMS.model.Stock', {
     }, {
         name: 'total_price',
         type: 'float'
+    }, {
+        name: 'type',
+        type: 'int'
     }]
 });

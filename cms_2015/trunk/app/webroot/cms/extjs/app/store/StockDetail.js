@@ -7,5 +7,18 @@ Ext.define('CMS.store.StockDetail', {
     extend: 'Ext.data.Store',
 
     //调用模型
-    model: 'CMS.model.StockDetail'
+    model: 'CMS.model.StockDetail',
+
+    proxy: {
+        type: 'ajax',
+        api: {
+            read: '/Stocks/detail_lists'
+        },
+        reader: {
+            type: 'json',
+            root: 'data',
+            successProperty: 'success',
+            totalProperty: 'total'
+        }
+    }
 });
