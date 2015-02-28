@@ -13,6 +13,11 @@ class StockDetail extends AppModel {
         'Product' => array (
             'className' => 'Product',
             'foreignKey' => 'product_id'
+        ),
+        'Stock' => array (
+            'className' => 'Stock',
+            'conditions' => 'Stock.order_sn=StockDetail.order_sn',
+            'foreignKey' => false
         )
     );
 }

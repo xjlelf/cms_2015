@@ -56,8 +56,32 @@ class StocksController extends AppController {
         $detailData = $this->getDetailData($this->data);
 
         $this->Stock->begin();
-        //第一步，计算虚拟库存
-        $flag = $this->ProductStock->updateStock($detailData, $this->data['type']);
+
+        $flag = true;
+        //更新订单
+        if (!empty($this->data['id'])) {
+            $orderData['id'] = $this->data['id'];
+            $application = array(
+                'fields' => array(
+                    'StockDetail.product_id',
+                    'StockDetail.numbers'
+                ),
+                'conditions' => array(
+                    'Stock.id' => $this->data['id']
+                )
+            );
+            $oldDetailData = $this->StockDetail->findAll($application);
+            //还原库存
+            $flag = $this->ProductStock->updateStock($oldDetailData['data'], $this->data['type'], -1);
+            //删除原明细
+            if ($flag) {
+                $flag = $this->StockDetail->deleteAll(array('Stock.id' => $this->data['id']));
+            }
+        }
+        if ($flag) {
+            //第一步，计算虚拟库存
+            $flag = $this->ProductStock->updateStock($detailData, $this->data['type']);
+        }
         if ($flag) {
             //第二步，保存明细
             foreach ($detailData as $v) {
@@ -132,7 +156,7 @@ class StocksController extends AppController {
                 'Product.goods_name'
             ),
             'conditions' => array(
-                'order_sn' => $order_sn
+                'StockDetail.order_sn' => $order_sn
             )
         );
         $this->result = $this->StockDetail->findAll($application);

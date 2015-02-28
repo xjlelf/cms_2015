@@ -18,19 +18,21 @@ class ProductStock extends AppModel {
 
     /**
      * 更新库存
+     *
      * @param $data
      * @param $type
+     * @param int $revert
      *
      * @return bool
      * @throws Exception
      */
-    public function updateStock($data, $type) {
+    public function updateStock($data, $type, $revert = 1) {
         $update_flag = true;
         if (empty($data)) {
             return false;
         }
         foreach ($data as $v) {
-            $saveData = $this->setStock($v, $type);
+            $saveData = $this->setStock($v, $type, $revert);
             $this->create();
             if (!$this->save($saveData, array('atomic' => false))) {
                 $update_flag = false;
@@ -42,12 +44,14 @@ class ProductStock extends AppModel {
 
     /**
      * 计算库存
+     *
      * @param $row
      * @param $type
+     * @param int $revert
      *
      * @return array
      */
-    public function setStock($row, $type) {
+    public function setStock($row, $type, $revert = 1) {
         $application = array(
             'fields' => array(
                 'id',
@@ -70,9 +74,17 @@ class ProductStock extends AppModel {
             );
         } else {
             if ($type == 1) {
-                $qty = $data[$this->name]['qty'] + $row['numbers'];
+                if ($revert == 1) {
+                    $qty = $data[$this->name]['qty'] + $row['numbers'];
+                } else {
+                    $qty = $data[$this->name]['qty'] - $row['numbers'];
+                }
             } else {
-                $qty = $data[$this->name]['qty'] - $row['numbers'];
+                if ($revert == 1) {
+                    $qty = $data[$this->name]['qty'] - $row['numbers'];
+                } else {
+                    $qty = $data[$this->name]['qty'] + $row['numbers'];
+                }
             }
             $saveData = array(
                 'id' => $data[$this->name]['id'],
