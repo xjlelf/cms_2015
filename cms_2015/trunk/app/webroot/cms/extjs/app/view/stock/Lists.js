@@ -94,7 +94,7 @@ Ext.define('CMS.view.stock.Lists', {
         handler: function() {
             var params = {
                 'order_sn': this.up().getComponent('order_sn').getValue()
-            }
+            };
             this.up('grid').reload(params);
         }
     }, '->', {

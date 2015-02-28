@@ -45,6 +45,9 @@ Ext.define('CMS.controller.Stock', {
                     form.getComponent('detail').store.load({
                         params: {'order_sn': record.data.order_sn}
                     });
+                },
+                delete: function(record) {
+                    this.showDeleteDialog(record, this.getStore('Stock'));
                 }
             },
             'stockdetail': {

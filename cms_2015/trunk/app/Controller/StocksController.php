@@ -61,22 +61,7 @@ class StocksController extends AppController {
         //更新订单
         if (!empty($this->data['id'])) {
             $orderData['id'] = $this->data['id'];
-            $application = array(
-                'fields' => array(
-                    'StockDetail.product_id',
-                    'StockDetail.numbers'
-                ),
-                'conditions' => array(
-                    'Stock.id' => $this->data['id']
-                )
-            );
-            $oldDetailData = $this->StockDetail->findAll($application);
-            //还原库存
-            $flag = $this->ProductStock->updateStock($oldDetailData['data'], $this->data['type'], -1);
-            //删除原明细
-            if ($flag) {
-                $flag = $this->StockDetail->deleteAll(array('Stock.id' => $this->data['id']));
-            }
+            $flag = $this->revertOrderDetails($this->data['id'], $this->data['type']);
         }
         if ($flag) {
             //第一步，计算虚拟库存
@@ -133,6 +118,67 @@ class StocksController extends AppController {
             }
         }
         return $detailData;
+    }
+
+    /**
+     * 订单删除
+     *
+     * @param $id
+     */
+    public function delete($id) {
+        $delete_flag = false;
+        if (!empty($id)) {
+            $this->Stock->begin();
+
+            $application = array(
+                'fields' => array(
+                    'Stock.type'
+                ),
+                'conditions' => array(
+                    'Stock.id' => $id
+                )
+            );
+            $orderType = $this->Stock->find('first', $application);
+            $type = $orderType['Stock']['type'];
+            $delete_flag = $this->revertOrderDetails($id, $type);
+            if ($delete_flag) {
+                $delete_flag = $this->Stock->delete($id);
+            }
+            if ($delete_flag) {
+                $this->Stock->commit();
+            } else {
+                $this->Stock->rollback();
+            }
+        }
+        $this->result['success'] = $delete_flag;
+    }
+
+    /**
+     * 还原订单明细和库存
+     *
+     * @param $order_id
+     * @param $type
+     *
+     * @return mixed
+     */
+    private function revertOrderDetails($order_id, $type) {
+        $application = array(
+            'fields' => array(
+                'StockDetail.product_id',
+                'StockDetail.numbers'
+            ),
+            'conditions' => array(
+                'Stock.id' => $order_id
+            )
+        );
+        $oldDetailData = $this->StockDetail->findAll($application);
+        //还原库存
+        $flag = $this->ProductStock->updateStock($oldDetailData['data'], $type, -1);
+        //删除原明细
+        if ($flag) {
+            $flag = $this->StockDetail->deleteAll(array('Stock.id' => $order_id));
+        }
+        return $flag;
     }
 
     /**
