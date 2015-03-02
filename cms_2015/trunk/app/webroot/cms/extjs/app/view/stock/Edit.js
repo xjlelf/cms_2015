@@ -98,13 +98,23 @@ Ext.define('CMS.view.stock.Edit', {
                     grid = form.getComponent('detail'),
                     store = grid.getStore();
                 var jsonData = Ext.encode(Ext.pluck(store.data.items, 'data'));
-                form.getComponent('real_detail').setValue(jsonData);
-                if (form.up('panel').itemId == 'stockin') {
-                    form.getComponent('type').setValue(1);
-                } else if (form.up('panel').itemId == 'stockout') {
-                    form.getComponent('type').setValue(2);
-                }
-                form.up('panel').fireEvent('save', form);
+                Ext.Msg.show({
+                    title: '系统提示',
+                    msg: '确定要保存修改？',
+                    buttons: Ext.Msg.YESNO,
+                    icon: Ext.Msg.QUESTION,
+                    fn: function(btnId) {
+                        if (btnId == 'yes') {
+                            form.getComponent('real_detail').setValue(jsonData);
+                            if (form.up('panel').itemId == 'stockin') {
+                                form.getComponent('type').setValue(1);
+                            } else if (form.up('panel').itemId == 'stockout') {
+                                form.getComponent('type').setValue(2);
+                            }
+                            form.up('panel').fireEvent('save', form);
+                        }
+                    }
+                });
             }
         }]
     }]

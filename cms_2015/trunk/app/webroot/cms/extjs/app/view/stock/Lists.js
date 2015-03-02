@@ -73,12 +73,12 @@ Ext.define('CMS.view.stock.Lists', {
             items: [{
                 text: '入库单',
                 handler: function() {
-                    this.up('grid').fireEvent('create', '入库单', 'stockstockin');
+                    this.up('grid').fireEvent('create', '入库单', 'stockin');
                 }
             }, {
                 text: '出库单',
                 handler: function() {
-                    this.up('grid').fireEvent('create', '出库单', 'stockstockout');
+                    this.up('grid').fireEvent('create', '出库单', 'stockout');
                 }
             }]
         }
