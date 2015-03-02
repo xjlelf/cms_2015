@@ -24,7 +24,7 @@
 <body>
 
 <div class="page-container">
-    <h1>cms系统登录</h1>
+    <h1>WMS系统登录</h1>
     <?php echo $this->form->create('Manager', array(
         'url' => array(
             'controller' => 'Managers',

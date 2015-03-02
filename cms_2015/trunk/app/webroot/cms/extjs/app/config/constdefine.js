@@ -9,7 +9,7 @@ Ext.define('/cms.extjs.app.config.constdefine', {
     /* 标题 */
     TITLE: {
         // 项目标题
-        PROJECT: '欢迎进入CMS管理系统'
+        PROJECT: '欢迎进入WMS管理系统'
     },
 
     //获取日期

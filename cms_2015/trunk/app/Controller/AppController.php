@@ -36,7 +36,7 @@ class AppController extends Controller {
     public $components = array('Session', 'Auth', 'Paginator');
 
     /** 默认标题 */
-    public $title = 'CMS管理系统';
+    public $title = 'WMS管理系统';
 
     /** 默认布局 */
     public $layout = 'ajax';
