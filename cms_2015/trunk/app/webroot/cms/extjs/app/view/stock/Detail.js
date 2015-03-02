@@ -70,7 +70,7 @@ Ext.define('CMS.view.stock.Detail', {
         dataIndex: 'stand',
         flex: 0.8
     }, {
-        header: '数量',
+        header: '数量（桶）',
         align: 'center',
         dataIndex: 'numbers',
         allowDecimals : false,//不允许输入小数
@@ -79,8 +79,8 @@ Ext.define('CMS.view.stock.Detail', {
             minValue: 0,
             onChange: function(numbers) {
                 var record = this.up('grid').getSelectionModel().getSelection();
-                record[0].data.amt = record[0].data.price * numbers;
                 record[0].data.weight = record[0].data.stand * numbers;
+                record[0].data.amt = record[0].data.price * record[0].data.stand * numbers;
             }
         },
         flex: 0.5
@@ -105,7 +105,7 @@ Ext.define('CMS.view.stock.Detail', {
             minValue: 0,
             onChange: function(price) {
                 var record = this.up('grid').getSelectionModel().getSelection();
-                record[0].data.amt = record[0].data.numbers * price;
+                record[0].data.amt = record[0].data.weight * price;
             }
         },
         flex: 0.75,
