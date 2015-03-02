@@ -16,7 +16,13 @@ class Product extends AppModel {
     public function setSku() {
         $sku = null;
         if (!empty($this->data['Product'])) {
-            $sku = $this->data['Product']['color_code'] . $this->data['Product']['cate_1'] . $this->data['Product']['cate_2'];
+            if (!empty($this->data['Product']['color_code'])) {
+                $sku = $this->data['Product']['color_code'];
+            }
+            $sku .= $this->data['Product']['cate_1'];
+            if (!empty($this->data['Product']['cate_2'])) {
+                $sku .= $this->data['Product']['cate_2'];
+            }
             $this->data['Product']['sku_sn'] = $sku = $this->getSku($sku);
         }
         return $sku;

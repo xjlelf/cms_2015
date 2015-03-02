@@ -47,13 +47,11 @@ Ext.define('CMS.view.product.Edit', {
             store: 'category.Type2',
             displayField: 'category_name',
             valueField: 'code',
-            editable: false,
-            allowBlank: false
+            editable: false
         }, {
             xtype: 'textfield',
             name: 'color_code',
-            fieldLabel: '颜色首字母',
-            allowBlank: false
+            fieldLabel: '颜色首字母'
         }, {
             xtype: 'textfield',
             name: 'goods_name',
