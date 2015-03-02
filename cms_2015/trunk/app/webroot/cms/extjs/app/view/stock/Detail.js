@@ -65,6 +65,38 @@ Ext.define('CMS.view.stock.Detail', {
         dataIndex: 'goods_name',
         flex: 1.5
     }, {
+        header: '规格（kg/桶）',
+        align: 'center',
+        dataIndex: 'stand',
+        flex: 0.8
+    }, {
+        header: '数量',
+        align: 'center',
+        dataIndex: 'numbers',
+        allowDecimals : false,//不允许输入小数
+        editor: {
+            xtype: 'numberfield',
+            minValue: 0,
+            onChange: function(numbers) {
+                var record = this.up('grid').getSelectionModel().getSelection();
+                record[0].data.amt = record[0].data.price * numbers;
+                record[0].data.weight = record[0].data.stand * numbers;
+            }
+        },
+        flex: 0.5
+    }, {
+        header: '重量（kg）',
+        align: 'center',
+        dataIndex: 'weight',
+        flex: 0.8,
+        renderer: function(value,metadata,record,rowIndex){
+            return value.toFixed(2);
+        },
+        summaryType: 'sum',
+        summaryRenderer: function(value, summaryData, dataIndex) {
+            return '总重量：' + value.toFixed(2);
+        }
+    }, {
         header: '商品单价',
         dataIndex: 'price',
         align: 'center',
@@ -78,40 +110,19 @@ Ext.define('CMS.view.stock.Detail', {
         },
         flex: 0.75,
         renderer: function(value, metadata, record, rowIndex) {
-            value = (value * 1).toFixed(2);
-            return value;
+            return value.toFixed(2);
         }
     }, {
-        header: '商品数量',
-        align: 'center',
-        dataIndex: 'numbers',
-        allowDecimals : false,//不允许输入小数
-        editor: {
-            xtype: 'numberfield',
-            minValue: 0,
-            onChange: function(numbers) {
-                var record = this.up('grid').getSelectionModel().getSelection();
-                record[0].data.amt = record[0].data.price * numbers;
-            }
-        },
-        flex: 0.5,
-        summaryType: 'sum',
-        summaryRenderer: function(value, summaryData, dataIndex) {
-            return '总数：' + value;
-        }
-    }, {
-        header: '小计',
+        header: '金额',
         align: 'center',
         dataIndex: 'amt',
         flex: 0.85,
         renderer: function(value,metadata,record,rowIndex){
-            value = (value * 1).toFixed(2);
-            return value;
+            return value.toFixed(2);
         },
         summaryType: 'sum',
         summaryRenderer: function(value, summaryData, dataIndex) {
-            value = (value * 1).toFixed(2);
-            return '合计：' + value;
+            return '合计：' + value.toFixed(2);
         }
     }, {
         header: '备注',

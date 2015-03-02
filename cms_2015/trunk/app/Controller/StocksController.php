@@ -199,7 +199,9 @@ class StocksController extends AppController {
                 'StockDetail.amt',
                 'StockDetail.remark',
                 'Product.sku_sn',
-                'Product.goods_name'
+                'Product.goods_name',
+                'Product.stand',
+                '(Product.stand*StockDetail.numbers) weight'
             ),
             'conditions' => array(
                 'StockDetail.order_sn' => $order_sn

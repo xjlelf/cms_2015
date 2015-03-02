@@ -29,6 +29,12 @@ Ext.define('CMS.model.StockDetail', {
         name: 'numbers',
         type: 'int'
     }, {
+        name: 'stand',
+        type: 'float'
+    }, {
+        name: 'weight',
+        type: 'float'
+    }, {
         name: 'amt',
         type: 'float'
     }, {
