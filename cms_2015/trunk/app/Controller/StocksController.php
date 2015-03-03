@@ -25,7 +25,8 @@ class StocksController extends AppController {
                 'Stock.stock_dt',
                 'Stock.type',
                 'Customer.name'
-            )
+            ),
+            'order' => 'Stock.stock_dt DESC'
         );
         parent::lists($application);
     }

@@ -27,6 +27,9 @@ class CategoryController extends AppController {
             );
             $this->result = $this->model->findAll($application);
         } else {
+            $application = array(
+                'order' => 'type ASC'
+            );
             parent::lists($application);
         }
     }

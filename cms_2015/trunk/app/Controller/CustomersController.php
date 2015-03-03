@@ -9,6 +9,16 @@
 class CustomersController extends AppController {
 
     /**
+     * 列表
+     */
+    public function lists($application = array()) {
+        $application = array(
+            'order' => 'created DESC'
+        );
+        parent::lists($application);
+    }
+
+    /**
      * 设置查询条件
      * @param $query
      */
