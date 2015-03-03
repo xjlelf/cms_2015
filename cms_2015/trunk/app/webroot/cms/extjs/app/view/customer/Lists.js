@@ -19,13 +19,19 @@ Ext.define('CMS.view.customer.Lists', {
         width: 40
     }, {
         header: '客户简称',
-        dataIndex: 's_name'
+        dataIndex: 's_name',
+        flex: 1,
+        align: 'center'
     }, {
         header: '客户全称',
-        dataIndex: 'name'
+        dataIndex: 'name',
+        flex: 2,
+        align: 'center'
     }, {
         header: '联系人',
-        dataIndex: 'man'
+        dataIndex: 'man',
+        flex: 1,
+        align: 'center'
     }, {
         header: '操作',
         xtype: 'actioncolumn',

@@ -18,13 +18,16 @@ Ext.define('CMS.view.category.Lists', {
         xtype: 'rownumberer'
     }, {
         header: '分类类型',
-        dataIndex: 'type'
+        dataIndex: 'type',
+        align: 'center'
     }, {
         header: '分类名称',
-        dataIndex: 'category_name'
+        dataIndex: 'category_name',
+        align: 'center'
     }, {
         header: '分类编码',
-        dataIndex: 'code'
+        dataIndex: 'code',
+        align: 'center'
     }, {
         header: '操作',
         xtype: 'actioncolumn',

@@ -19,16 +19,30 @@ Ext.define('CMS.view.product.Lists', {
         width: 40
     }, {
         header: '商品编号',
-        dataIndex: 'sku_sn'
+        dataIndex: 'sku_sn',
+        flex: 1,
+        align: 'center'
     }, {
         header: '商品名称',
-        dataIndex: 'goods_name'
+        dataIndex: 'goods_name',
+        flex: 1.5,
+        align: 'center'
     }, {
         header: '商品成本价',
-        dataIndex: 'original_price'
+        dataIndex: 'original_price',
+        flex: 0.8,
+        align: 'center',
+        renderer: function(value) {
+            return value.toFixed(2);
+        }
     }, {
         header: '商品规格（kg/桶）',
-        dataIndex: 'stand'
+        dataIndex: 'stand',
+        flex: 0.8,
+        align: 'center',
+        renderer: function(value) {
+            return value.toFixed(2);
+        }
     }, {
         header: '操作',
         xtype: 'actioncolumn',

@@ -19,7 +19,9 @@ Ext.define('CMS.view.stock.Lists', {
         width: 40
     }, {
         header: '出入库单编号',
-        dataIndex: 'order_sn'
+        dataIndex: 'order_sn',
+        flex: 1.5,
+        align: 'center'
     }, {
         header: '类型',
         dataIndex: 'type',
@@ -29,19 +31,27 @@ Ext.define('CMS.view.stock.Lists', {
             } else {
                 return '出库单';
             }
-        }
+        },
+        flex: 1,
+        align: 'center'
     }, {
         header: '客户名称',
-        dataIndex: 'name'
+        dataIndex: 'name',
+        flex: 2,
+        align: 'center'
     }, {
         header: '出入库时间',
-        dataIndex: 'stock_dt'
+        dataIndex: 'stock_dt',
+        flex: 1,
+        align: 'center'
     }, {
         header: '订单总价',
         dataIndex: 'total_price',
         renderer: function(value) {
             return value.toFixed(2);
-        }
+        },
+        flex: 1,
+        align: 'center'
     }, {
         header: '操作',
         xtype: 'actioncolumn',

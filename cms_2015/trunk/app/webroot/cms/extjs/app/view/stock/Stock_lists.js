@@ -19,16 +19,27 @@ Ext.define('CMS.view.stock.Stock_lists', {
         width: 40
     }, {
         header: '商品编号',
-        dataIndex: 'sku_sn'
+        dataIndex: 'sku_sn',
+        flex: 1,
+        align: 'center'
     }, {
         header: '商品名称',
-        dataIndex: 'goods_name'
+        dataIndex: 'goods_name',
+        flex: 2,
+        align: 'center'
     }, {
         header: '商品规格（kg/桶）',
-        dataIndex: 'stand'
+        dataIndex: 'stand',
+        flex: 1,
+        align: 'center',
+        renderer: function(value) {
+            return value.toFixed(2);
+        }
     }, {
         header: '即时库存',
-        dataIndex: 'qty'
+        dataIndex: 'qty',
+        flex: 1,
+        align: 'center'
     }],
 
     //顶部栏
