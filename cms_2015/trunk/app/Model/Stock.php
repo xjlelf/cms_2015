@@ -15,4 +15,13 @@ class Stock extends AppModel {
             'foreignKey' => 'customer'
         )
     );
+
+    /** 连表  */
+    public $hasOne = array (
+        'StockDetail' => array (
+            'className' => 'StockDetail',
+            'conditions' => 'Stock.order_sn=StockDetail.order_sn',
+            'foreignKey' => false
+        )
+    );
 }

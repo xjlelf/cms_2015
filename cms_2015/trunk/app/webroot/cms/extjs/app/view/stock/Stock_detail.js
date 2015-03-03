@@ -1,16 +1,21 @@
 /**
  * 仓储管理 商品库存列表
  * */
-Ext.define('CMS.view.stock.Stock_lists', {
+Ext.define('CMS.view.stock.Stock_detail', {
 
     //继承
     extend: 'CMS.view.common.Grid',
 
     //名称自定义
-    alias: 'widget.stockstock_lists',
+    alias: 'widget.stockstock_detail',
 
-    //调用数据
-    store: 'ProductStock',
+    //默认事件
+    initComponent: function() {
+        var store = Ext.create('CMS.store.ProductStockDetail');
+        this.store = store;
+        this.bbar.store = store;
+        this.callParent(arguments);
+    },
 
     //列
     columns: [{
@@ -18,26 +23,30 @@ Ext.define('CMS.view.stock.Stock_lists', {
         xtype: 'rownumberer',
         width: 40
     }, {
-        header: '商品编号',
-        dataIndex: 'sku_sn',
+        header: '订单编号',
+        dataIndex: 'order_sn',
         flex: 1,
         align: 'center'
     }, {
-        header: '商品名称',
-        dataIndex: 'goods_name',
+        header: '订单类型',
+        dataIndex: 'type',
+        renderer: function(value) {
+            if (value == 1) {
+                return '入库单';
+            } else {
+                return '出库单';
+            }
+        },
+        flex: 1,
+        align: 'center'
+    }, {
+        header: '客户名称',
+        dataIndex: 'name',
         flex: 2,
         align: 'center'
     }, {
-        header: '商品规格（kg/桶）',
-        dataIndex: 'stand',
-        flex: 1,
-        align: 'center',
-        renderer: function(value) {
-            return value.toFixed(2);
-        }
-    }, {
-        header: '即时库存',
-        dataIndex: 'qty',
+        header: '商品数量',
+        dataIndex: 'numbers',
         flex: 1,
         align: 'center'
     }, {
@@ -46,7 +55,7 @@ Ext.define('CMS.view.stock.Stock_lists', {
         align: 'center',
         items: [{
             icon: ConstDefine.COMMON_ICONS_PATH + 'application_view_list.png',
-            tooltip: '明细',
+            tooltip: '订单详情',
             handler: function(grid, rowIndex) {
                 var row = grid.getStore().getAt(rowIndex);
                 grid.up('grid').fireEvent('detail', row);
@@ -56,9 +65,9 @@ Ext.define('CMS.view.stock.Stock_lists', {
 
     //顶部栏
     tbar: [{
-        itemId: 'sku_sn',
+        itemId: 'order_sn',
         xtype: 'textfield',
-        fieldLabel: '商品编号',
+        fieldLabel: '订单编号',
         labelWidth: 60
     }, {
         xtype: 'button',
@@ -66,7 +75,7 @@ Ext.define('CMS.view.stock.Stock_lists', {
         text: '搜索',
         handler: function() {
             var params = {
-                'sku_sn': this.up().getComponent('sku_sn').getValue()
+                'order_sn': this.up().getComponent('order_sn').getValue()
             };
             this.up('grid').reload(params);
         }
@@ -82,6 +91,6 @@ Ext.define('CMS.view.stock.Stock_lists', {
     //底部栏
     bbar: {
         xtype: 'commonpage',
-        store: 'ProductStock'
+        store: null
     }
 });

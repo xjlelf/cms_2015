@@ -220,4 +220,32 @@ class StocksController extends AppController {
         );
         $this->result = $this->StockDetail->findAll($application);
     }
+
+    /**
+     * 商品库存明细
+     */
+    public function product_stock_detail() {
+        $product_id = $this->request->query('product_id');
+        if (empty($product_id)) {
+            $this->result['data'] = array();
+        }
+        $application = array(
+            'fields' => array(
+                'StockDetail.numbers',
+                'Stock.order_sn',
+                'Stock.type',
+                'Stock.customer',
+                'Stock.stock_dt',
+                'Customer.name',
+            ),
+            'conditions' => array(
+                'StockDetail.product_id' => $product_id
+            )
+        );
+        if ($this->_setPage($application)) {
+            $this->result = $this->_forPaginate($application);
+        } else {
+            $this->result = $this->Stock->findAll($application);
+        }
+    }
 }

@@ -11,7 +11,8 @@ Ext.define('CMS.controller.Stock', {
         'Stock',
         'Customer',
         'Product',
-        'ProductStock'
+        'ProductStock',
+        'ProductStockDetail'
     ],
 
     //调用视图
@@ -19,7 +20,8 @@ Ext.define('CMS.controller.Stock', {
         'stock.Lists',
         'stock.Edit',
         'stock.Detail',
-        'stock.Stock_lists'
+        'stock.Stock_lists',
+        'stock.Stock_detail'
     ],
 
     //应用程序加载完成之后，Viewport创建之前触发
@@ -68,6 +70,35 @@ Ext.define('CMS.controller.Stock', {
                             icon: Ext.Msg.INFO
                         });
                         store.load();
+                    });
+                }
+            },
+            'stockstock_lists': {
+                detail: function(record) {
+                    var title = record.data.goods_name + ' 库存明细',
+                        itemId = 'stockstock_detail' + record.data.product_id;
+                    this.showPanel('stockstock_detail', title, Ext.getCmp('main'), itemId);
+                    var grid = Ext.getCmp('main').getComponent(itemId);
+                    grid.store.proxy.extraParams = {'product_id': record.data.product_id};
+                    grid.store.load();
+                }
+            },
+            'stockstock_detail': {
+                detail: function(record) {
+                    if (record.data.type == 1) {
+                        var title = '入库单 ' + record.data.order_sn,
+                            itemId = 'stockin' + record.data.order_sn;
+                    } else {
+                        var title = '出库单 ' + record.data.order_sn,
+                            itemId = 'stockout' + record.data.order_sn;
+                    }
+                    this.showPanel('stockedit', title, Ext.getCmp('main'), itemId);
+                    var form = Ext.getCmp('main').getComponent(itemId).down('form');
+                    this.getStore('Customer').load();
+                    this.getStore('Product').load();
+                    form.loadRecord(record);
+                    form.getComponent('detail').store.load({
+                        params: {'order_sn': record.data.order_sn}
                     });
                 }
             }
