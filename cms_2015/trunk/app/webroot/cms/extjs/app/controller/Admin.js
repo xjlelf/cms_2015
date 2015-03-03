@@ -12,7 +12,7 @@ Ext.define('CMS.controller.Admin', {
     ],
 
     //增加tab
-    showPanel: function(panel, title, mainpanel, itemId) {
+    showPanel: function(panel, title, mainpanel, itemId, isLoad) {
         if (!panel) {
             var tabpanel = Ext.create('Ext.panel.Panel', {
                 title: title,
@@ -33,7 +33,9 @@ Ext.define('CMS.controller.Admin', {
                     closable: true
                 });
                 if (tabpanel.store) {
-                    tabpanel.getStore().load();
+                    if (Ext.isEmpty(isLoad)) {
+                        tabpanel.getStore().load();
+                    }
                 }
                 mainpanel.add(tabpanel);
             }

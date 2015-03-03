@@ -77,7 +77,7 @@ Ext.define('CMS.controller.Stock', {
                 detail: function(record) {
                     var title = record.data.goods_name + ' 库存明细',
                         itemId = 'stockstock_detail' + record.data.product_id;
-                    this.showPanel('stockstock_detail', title, Ext.getCmp('main'), itemId);
+                    this.showPanel('stockstock_detail', title, Ext.getCmp('main'), itemId, true);
                     var grid = Ext.getCmp('main').getComponent(itemId);
                     grid.store.proxy.extraParams = {'product_id': record.data.product_id};
                     grid.store.load();
