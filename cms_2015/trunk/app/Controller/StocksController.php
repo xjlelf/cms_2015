@@ -42,6 +42,16 @@ class StocksController extends AppController {
                 'order_sn LIKE' => $this->Stock->selectLike($query['order_sn'])
             );
         }
+        if (!empty($query['stock_dt1'])) {
+            $conditions[] = array(
+                'stock_dt >=' => $query['stock_dt1']
+            );
+        }
+        if (!empty($query['stock_dt2'])) {
+            $conditions[] = array(
+                'stock_dt <=' => $query['stock_dt2']
+            );
+        }
         return $conditions;
     }
 

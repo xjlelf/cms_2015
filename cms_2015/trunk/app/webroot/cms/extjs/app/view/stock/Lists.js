@@ -98,12 +98,26 @@ Ext.define('CMS.view.stock.Lists', {
         fieldLabel: '订单编号',
         labelWidth: 60
     }, {
+        itemId: 'stock_dt1',
+        xtype: 'datefield',
+        fieldLabel: '出入库时间从',
+        format: 'Y-m-d',
+        labelWidth: 80
+    }, {
+        itemId: 'stock_dt2',
+        xtype: 'datefield',
+        fieldLabel: '至',
+        format: 'Y-m-d',
+        labelWidth: 30
+    }, {
         xtype: 'button',
         icon: ConstDefine.COMMON_ICONS_PATH + 'search.png',
         text: '搜索',
         handler: function() {
             var params = {
-                'order_sn': this.up().getComponent('order_sn').getValue()
+                'order_sn': this.up().getComponent('order_sn').getValue(),
+                'stock_dt1': this.up().getComponent('stock_dt1').getValue(),
+                'stock_dt2': this.up().getComponent('stock_dt2').getValue()
             };
             this.up('grid').reload(params);
         }
